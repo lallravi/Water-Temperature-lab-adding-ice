@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment Data Table</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding: 20px; background-color: #f8f9fa; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1, h2 { text-align: center; color: #333; }
+        h1 { color: #005a9c; margin-bottom: 25px;}
+        
+        /* Checklist Styles */
+        .checklist {
+            background-color: #e9e6f5; /* Light purple background */
+            border: 1px solid #c3bcdc;
+            border-radius: 8px;
+            padding: 10px 20px;
+            margin-bottom: 30px;
+        }
+        .checklist h2 {
+            color: #3f356c;
+            text-align: left;
+        }
+        .checklist table {
+            width: 100%;
+            border: none;
+        }
+        .checklist th, .checklist td {
+            border: none;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .checklist th {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #3f356c;
+            width: 5%;
+        }
+
+        /* Main Table Styles */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 1.1em; }
+        th, td { border: 1px solid #dee2e6; padding: 12px; text-align: center; vertical-align: middle; }
+        thead th { background-color: #e9ecef; color: #495057; }
+        tbody tr:nth-child(odd) { background-color: #f8f9fa; }
+        .iv-column { font-weight: bold; }
+        .avg-column { background-color: #fff3cd; font-weight: bold;}
+        
+        .nav-link { display: block; text-align: center; margin-top: 30px; font-size: 1.2em; color: #007bff; text-decoration: none; }
+        .nav-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Table & Checklist 📝</h1>
+
+        <div class="checklist">
+            <h2>Perfect Data Table Checklist</h2>
+            <p>Use the mnemonic <strong>HIT DUG</strong> to ensure your data table is perfect.</p>
+            <table>
+                <tr><th>H</th><td><b>Headings</b> – Clear headings are given for each column.</td></tr>
+                <tr><th>I</th><td><b>Independent Variable</b> – The IV goes in the first column.</td></tr>
+                <tr><th>T</th><td><b>Title</b> – A clear and descriptive title is given for the table.</td></tr>
+                <tr><th>D</th><td><b>Decimal Places</b> – Decimal places are consistent for all measurements in a column.</td></tr>
+                <tr><th>U</th><td><b>Units</b> – Each column heading has clear units. <b>You must not put units next to the data values themselves.</b></td></tr>
+                <tr><th>G</th><td><b>Gridlines</b> – The table is enclosed in a box with clear gridlines.</td></tr>
+            </table>
+        </div>
+
+        <h2>Effect of Adding Iced Water on Water Temperature</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="2">Total Volume of Iced Water Added (cm³)<br><em>(Independent Variable)</em></th>
+                    <th colspan="3">Final Temperature (°C)<br><em>(Dependent Variable)</em></th>
+                    <th rowspan="2">Average Temperature (°C)</th>
+                </tr>
+                <tr>
+                    <th>Trial 1</th>
+                    <th>Trial 2</th>
+                    <th>Trial 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="iv-column">0</td><td></td><td></td><td></td><td class="avg-column"></td></tr>
+                <tr><td class="iv-column">5</td><td></td><td></td><td></td><td class="avg-column"></td></tr>
+                <tr><td class="iv-column">10</td><td></td><td></td><td></td><td class="avg-column"></td></tr>
+                <tr><td class="iv-column">15</td><td></td><td></td><td></td><td class="avg-column"></td></tr>
+                <tr><td class="iv-column">20</td><td></td><td></td><td></td><td class="avg-column"></td></tr>
+                <tr><td class="iv-column">25</td><td></td><td></td><td></td><td class="avg-column"></td></tr>
+                <tr><td class="iv-column">30</td><td></td><td></td><td></td><td class="avg-column"></td></tr>
+            </tbody>
+        </table>
+        
+        <a href="simulation.html" class="nav-link">← Back to the Simulation</a>
+    </div>
+</body>
+</html>

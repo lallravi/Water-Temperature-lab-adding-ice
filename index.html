@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Change Investigation (Realistic Simulation)</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; flex-direction: column; background-color: #f4f7f6; color: #333; text-align: center; padding: 20px; }
+        h1 { color: #005a9c; }
+        .instructions { background-color: #fff3cd; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; margin-bottom: 20px; max-width: 600px; }
+        #simulation-container { display: flex; align-items: flex-end; gap: 50px; margin-bottom: 30px; }
+        .apparatus { display: flex; flex-direction: column; align-items: center; }
+        #beaker { width: 150px; height: 200px; border: 3px solid #333; border-top: none; border-radius: 0 0 15px 15px; position: relative; background-color: #ffffff; overflow: hidden; }
+        #water-level { position: absolute; bottom: 0; left: 0; width: 100%; background-color: #aadaff; transition: height 0.5s ease-in-out; }
+        #thermometer-container { width: 30px; height: 220px; background-color: #e0e0e0; border: 2px solid #333; border-radius: 15px; position: relative; display: flex; justify-content: center; }
+        #thermometer-tube { width: 10px; height: 190px; background: white; position: absolute; bottom: 25px; overflow: hidden; }
+        #mercury { background-color: #ff4545; width: 100%; position: absolute; bottom: 0; transition: height 0.5s ease-in-out; }
+        #thermometer-bulb { width: 25px; height: 25px; background-color: #ff4545; border-radius: 50%; position: absolute; bottom: 5px; }
+        #readout { font-size: 1.5em; font-weight: bold; background-color: #e9ecef; padding: 10px 20px; border-radius: 8px; margin-top: 10px; width: 200px; }
+        #readout p { margin: 5px 0; }
+        .controls { display: flex; gap: 15px; margin-bottom: 20px; }
+        button { padding: 12px 25px; font-size: 1em; font-weight: bold; cursor: pointer; border: none; border-radius: 8px; background-color: #007bff; color: white; transition: background-color 0.2s; }
+        button:hover { background-color: #0056b3; }
+        #reset-btn { background-color: #6c757d; }
+        #reset-btn:hover { background-color: #5a6268; }
+        .nav-link { font-size: 1.1em; color: #0056b3; text-decoration: none; }
+        .nav-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <h1>Investigating Temperature Change 🌡️</h1>
+    <div class="instructions">
+        <p>Record your results in a table. When you hit <strong>Reset</strong>, the starting conditions will be slightly different, just like starting a new trial in a real lab.</p>
+    </div>
+
+    <div id="simulation-container">
+        <div class="apparatus">
+            <div id="beaker">
+                <div id="water-level"></div>
+            </div>
+            <div id="readout">
+                <p>Volume: <span id="volume-display">25.0</span> cm³</p>
+                <p>Temp: <span id="temp-display">25.0</span> °C</p>
+            </div>
+        </div>
+        <div class="apparatus">
+            <div id="thermometer-container">
+                <div id="thermometer-tube">
+                    <div id="mercury"></div>
+                </div>
+                <div id="thermometer-bulb"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="add-btn">Add 5 cm³ Iced Water</button>
+        <button id="reset-btn">Reset for New Trial</button>
+    </div>
+    
+    <a href="table.html" class="nav-link">View Sample Data Table</a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const volumeDisplay = document.getElementById('volume-display');
+            const tempDisplay = document.getElementById('temp-display');
+            const waterLevel = document.getElementById('water-level');
+            const mercury = document.getElementById('mercury');
+            const addBtn = document.getElementById('add-btn');
+            const resetBtn = document.getElementById('reset-btn');
+
+            const INITIAL_TAP_WATER_VOLUME = 25;
+            const BASE_TAP_WATER_TEMP = 25.0; 
+            const ICED_WATER_PORTION = 5;
+            const ICED_WATER_TEMP = 0.0;
+            const MAX_VOLUME = 75;
+            const MAX_TEMP = 30;
+
+            let currentVolume;
+            let currentTemp;
+
+            function updateDisplay() {
+                volumeDisplay.textContent = currentVolume.toFixed(1);
+                tempDisplay.textContent = currentTemp.toFixed(1);
+                const waterHeightPercent = (currentVolume / MAX_VOLUME) * 100;
+                waterLevel.style.height = `${waterHeightPercent}%`;
+                const mercuryHeightPercent = (currentTemp / MAX_TEMP) * 100;
+                mercury.style.height = `${mercuryHeightPercent}%`;
+            }
+
+            function addIcedWater() {
+                const newTotalVolume = currentVolume + ICED_WATER_PORTION;
+                
+                // Calculate the theoretical temperature
+                const theoreticalTemp = ((currentVolume * currentTemp) + (ICED_WATER_PORTION * ICED_WATER_TEMP)) / newTotalVolume;
+                
+                // Add a small random "measurement error" for realism
+                const measurementError = (Math.random() - 0.5) * 0.2; // Creates a variance of ±0.1°C
+                const measuredTemp = theoreticalTemp + measurementError;
+                
+                currentVolume = newTotalVolume;
+                currentTemp = measuredTemp;
+                
+                updateDisplay();
+            }
+
+            function resetSimulation() {
+                currentVolume = INITIAL_TAP_WATER_VOLUME;
+                // Set a new random starting temperature close to the base for each trial
+                const startingVariation = (Math.random() - 0.5) * 1.0; // Creates a starting variance of ±0.5°C
+                currentTemp = BASE_TAP_WATER_TEMP + startingVariation;
+                updateDisplay();
+            }
+
+            addBtn.addEventListener('click', addIcedWater);
+            resetBtn.addEventListener('click', resetSimulation);
+
+            resetSimulation();
+        });
+    </script>
+</body>
+</html>
